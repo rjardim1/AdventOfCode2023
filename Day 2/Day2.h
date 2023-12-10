@@ -24,7 +24,7 @@ private:
 	};
 
 private:
-	static int GetCubeCount(const EColour &cube_colour, const string &cubes_in_hand);
+	static int GetCubeCount(const string &colour, const string &cubes_in_hand);
 };
 
 
