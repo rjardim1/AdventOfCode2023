@@ -5,116 +5,143 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <vector>
 
 #include "Day2.h"
 
 using namespace std;
 
-struct SCubes
-{
-    uint Red;
-    uint Green;
-    uint Blue;
-
-    SCubes(const int &red, const int &green, const int &blue)
-        : Red(red), Green(green), Blue(blue)
-    {
-    }
-};
-
 void Day2::SolveDay2()
 {
     cout << "Day 2" << endl;
     fstream input_file("/Users/rubenj/AdventOfCode2023/Day 2/input2.txt");
-    string line;
+    string game_line;
 
-    const regex reg("(Game) [0-9]+");
-    const char separator = ';';
+    const regex reg("Game.*?(\\d+)");
+    const char separator = ':';
+    map<int, cube_sets_in_game_type> GamesMap;
 
-    while (getline(input_file, line))
+    while (getline(input_file, game_line))
     {
-        vector<SCubes> stored_cubes;
-        if (regex_search(line, reg))
+        stringstream game_line_stream(game_line);
+        string game;
+
+        while (getline(game_line_stream, game, separator))
         {
-            vector<string> set_of_cubes;
-            string cubes;
-            stringstream line_stream(line);
+            int game_id = 0;
+            cube_sets_in_game_type cube_sets;
 
-            while (getline(line_stream, cubes, separator))
+            stringstream game_ss(game);
+            string game_data;
+
+            while(getline(game_ss, game_data, separator))
             {
-                set_of_cubes.emplace_back(cubes);
-            }
-
-            for(const auto &cubes : set_of_cubes)
-            {
-                stringstream line_stream2(cubes);
-                string cube_str;
-                const char cube_seperator = ',';
-
-                int red_cubes = 0;
-                int green_cubes = 0;
-                int blue_cubes = 0;
-
-                while(getline(line_stream2, cube_str, cube_seperator))
+                const string game_keyword = "Game ";
+                if(game_data.find(game_keyword) != string::npos)
                 {
-                    if(cube_str.find("red") != string::npos)
+                    cout << game_data.at(game_data.find(game_keyword) + game_keyword.size()) << " ";
+                    cout << game_data.at(game_data.find(game_keyword) + game_keyword.size()  + 1) << endl;
+
+                    if(game_data.at(game_data.find(game_keyword) + game_keyword.size()) == ':')
                     {
-                        red_cubes = GetCubeCount("red", cube_str);
+                        game_id = stoi(&game_data.at(game_data.find(game_keyword) + 1));
                     }
-                    else if(cube_str.find("green") != string::npos)
+                    else if(game_data.at(game_data.find(game_keyword) + game_keyword.size()) == ':')
                     {
-                        green_cubes = GetCubeCount("green", cube_str);
-                    }
-                    else if(cube_str.find("blue") != string::npos)
-                    {
-                        blue_cubes = GetCubeCount("blue", cube_str);
+                        //int num_1 = stoi(&game_data.at(game_data.find(game_keyword) + 1));
+                        //int num_2 = stoi(&game_data.at(game_data.find(game_keyword) + 2));
+
+                        //game_id = stoi(to_string(num_1) + to_string(num_2));
                     }
                 }
             }
 
-            return;
+
+            if (!static_cast<bool>(game_id))
+            {
+                cube_sets = GetHandsInGame(game);
+            }
+
+            GamesMap.insert(make_pair(game_id, cube_sets));
         }
     }
+
+    int combined_valid_game_id = 0;
+
+    for (const auto&[game_id, game_sets]: GamesMap)
+    {
+        bool valid_game = true;
+        for (const auto &hand: game_sets)
+        {
+            if(!hand.Valid)
+            {
+                valid_game = false;
+            }
+        }
+
+        if(valid_game)
+        {
+            combined_valid_game_id += game_id;
+        }
+    }
+
+    cout << "Part 1: " << combined_valid_game_id << endl;
 }
 
-int Day2::GetCubeCount(const string &colour, const string &cubes_in_hand)
+cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)
 {
-    if(colour == "red")
-    {
-        stringstream line_stream2(cubes_in_hand);
-        string cube_str;
-        const char cube_seperator = ':';
+    cube_sets_in_game_type cube_sets;
+    const char hand_separator = ';';
+    stringstream hands_in_game_ss(hands);
+    string hand;
 
-        while (getline(line_stream2, cube_str, cube_seperator))
+    while(getline(hands_in_game_ss, hand, hand_separator))
+    {
+        const char cube_separator = ',';
+        stringstream hand_ss(hand);
+        string cube;
+
+        int red_cubes = 0;
+        int green_cubes = 0;
+        int blue_cubes = 0;
+
+        while(getline(hand_ss, cube, cube_separator))
         {
-            if (cube_str.find(colour) != string::npos)
+            const char value_separator = ' ';
+            stringstream cube_ss(cube);
+            string cube_value;
+            vector<string> cube_values;
+
+            while(getline(cube_ss, cube_value, value_separator))
             {
-                const_cast<string &>(cubes_in_hand) = cube_str;
+                cube_values.emplace_back(cube_value);
+            }
+
+            reverse(cube_values.begin(), cube_values.end());
+
+            for(int i = 0; i < cube_values.size(); i++)
+            {
+                if(cube_values.at(i).find("red") != string::npos)
+                {
+                    red_cubes = stoi(cube_values.at(i + 1));
+                    i++;
+                }
+                else if(cube_values.at(i).find("green") != string::npos)
+                {
+                    green_cubes = stoi(cube_values.at(i + 1));
+                    i++;
+                }
+                else if(cube_values.at(i).find("blue") != string::npos)
+                {
+                    blue_cubes = stoi(cube_values.at(i + 1));
+                    i++;
+                }
             }
         }
+
+        cube_sets.emplace_back(SCubes(red_cubes, green_cubes, blue_cubes));
     }
 
-    int return_val = 0;
-
-    if(cubes_in_hand.find(colour) != string::npos)
-    {
-        stringstream cube_stream(cubes_in_hand);
-        string cube_str;
-        const char cube_num_seporator = ' ';
-
-        while(getline(cube_stream, cube_str, cube_num_seporator))
-        {
-            try
-            {
-                return_val = stoi(cube_str);
-            }
-            catch (exception &error)
-            {
-                //assume it was the name of the colour. Just continue.
-                continue;
-            }
-
-        }
-    }
-    return return_val;
+    return cube_sets;
 }
