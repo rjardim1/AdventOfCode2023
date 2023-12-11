@@ -63,17 +63,28 @@ void Day2::SolveDay2()
     }
 
     int combined_valid_game_id = 0;
+    int summed_power_cubes = 0;
 
     for (const auto&[game_id, game_sets]: GamesMap)
     {
         bool valid_game = true;
-        for (const auto &hand: game_sets)
+        int max_red_cubes = 0;
+        int max_green_cubes = 0;
+        int max_blue_cubes = 0;
+
+        for (const auto &hand : game_sets)
         {
             if(!hand.Valid)
             {
                 valid_game = false;
             }
+
+            max_red_cubes = max_red_cubes < hand.Red ? hand.Red : max_red_cubes;
+            max_green_cubes = max_green_cubes < hand.Green ? hand.Green : max_green_cubes;
+            max_blue_cubes = max_blue_cubes < hand.Blue ? hand.Blue : max_blue_cubes;
         }
+
+        summed_power_cubes += (max_red_cubes * max_green_cubes * max_blue_cubes);
 
         if(valid_game)
         {
@@ -82,6 +93,7 @@ void Day2::SolveDay2()
     }
 
     cout << "Part 1: " << combined_valid_game_id << endl;
+    cout << "Part 2: " << summed_power_cubes << endl;
 }
 
 cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)

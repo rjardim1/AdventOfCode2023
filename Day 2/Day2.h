@@ -12,9 +12,9 @@ using namespace std;
 
 struct SCubes
 {
-    uint Red;
-    uint Green;
-    uint Blue;
+    int Red;
+    int Green;
+    int Blue;
 
     bool Valid;
 
