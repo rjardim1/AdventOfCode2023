@@ -26,11 +26,10 @@ void Day2::SolveDay2()
     {
         stringstream game_line_stream(game_line);
         string game;
+        int game_id = 0;
 
         while (getline(game_line_stream, game, separator))
         {
-            int game_id = 0;
-            cube_sets_in_game_type cube_sets;
 
             stringstream game_ss(game);
             string game_data;
@@ -40,30 +39,26 @@ void Day2::SolveDay2()
                 const string game_keyword = "Game ";
                 if(game_data.find(game_keyword) != string::npos)
                 {
-                    cout << game_data.at(game_data.find(game_keyword) + game_keyword.size()) << " ";
-                    cout << game_data.at(game_data.find(game_keyword) + game_keyword.size()  + 1) << endl;
-
-                    if(game_data.at(game_data.find(game_keyword) + game_keyword.size()) == ':')
+                    string game_id_str;
+                    int num_idx = 0;
+                    while(game_data.size() > game_keyword.size() + num_idx)
                     {
-                        game_id = stoi(&game_data.at(game_data.find(game_keyword) + 1));
-                    }
-                    else if(game_data.at(game_data.find(game_keyword) + game_keyword.size()) == ':')
-                    {
-                        //int num_1 = stoi(&game_data.at(game_data.find(game_keyword) + 1));
-                        //int num_2 = stoi(&game_data.at(game_data.find(game_keyword) + 2));
+                        game_id_str.push_back(game_data.at(game_data.find(game_keyword) +
+                            game_keyword.size() + num_idx));
 
-                        //game_id = stoi(to_string(num_1) + to_string(num_2));
+                        num_idx++;
                     }
+
+                    game_id = stoi(game_id_str);
                 }
             }
 
-
-            if (!static_cast<bool>(game_id))
+            if(game_data.find("red") != string::npos ||
+            game_data.find("green") != string::npos ||
+            game_data.find("blue") != string::npos)
             {
-                cube_sets = GetHandsInGame(game);
+                GamesMap.insert(make_pair(game_id, GetHandsInGame(game)));
             }
-
-            GamesMap.insert(make_pair(game_id, cube_sets));
         }
     }
 
@@ -139,8 +134,7 @@ cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)
                 }
             }
         }
-
-        cube_sets.emplace_back(SCubes(red_cubes, green_cubes, blue_cubes));
+        cube_sets.emplace_back(red_cubes, green_cubes, blue_cubes);
     }
 
     return cube_sets;

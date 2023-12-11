@@ -45,3 +45,18 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
+/cmake-build-debug/.ninja_deps
+/cmake-build-debug/.ninja_log
+/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-5d3175384c88a3d5348f.json
+/cmake-build-debug/AdventOfCode2023
+/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-3dbf56e1c5f59067396a.json
+/cmake-build-debug/.cmake/api/v1/query/toolchains-v1
+/cmake-build-debug/.cmake/api/v1/reply/target-AdventOfCode2023-Debug-8e74553bd5e0ebd6dc6d.json
+/cmake-build-debug/.cmake/api/v1/reply/index-2023-12-11T21-39-14-0206.json
+/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-f5ebdc15457944623624.json
+/cmake-build-debug/.cmake/api/v1/query/codemodel-v2
+/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-e726b255b788eb80dea8.json
+/cmake-build-debug/.cmake/api/v1/query/cache-v2
+/cmake-build-debug/build.ninja
+/cmake-build-debug/.cmake/api/v1/reply/cache-v2-330224fd7061567ac966.json
+/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1
