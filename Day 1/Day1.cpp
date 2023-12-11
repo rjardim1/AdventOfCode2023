@@ -69,6 +69,7 @@ void Day1::SolveDay1()
 		for (const auto &number: num_strings)
 		{
 			int pos = static_cast<int>(line.find(number.NumName));
+
 			if (pos != string::npos)
 			{
 				str_num.emplace_back(pos, number.Number);
@@ -79,12 +80,12 @@ void Day1::SolveDay1()
 		{
 			std::sort(str_num.begin(), str_num.end());
 
-			if (first < 0 || digit_first_pos > str_num.front().first)
+			if (digit_first_pos > str_num.front().first)
 			{
 				first = str_num.front().second;
 			}
 
-			if (last < 0 || digit_last_pos < str_num.back().first)
+			if (digit_last_pos < str_num.back().first)
 			{
 				last = str_num.back().second;
 			}
@@ -93,6 +94,6 @@ void Day1::SolveDay1()
 		total_2 += stoi(to_string(first) + to_string(last));
 	}
 
-	cout << total_1 << endl;
-	cout << total_2 << endl;
+	cout << "Part 1: " << total_1 << endl;
+	cout << "Part 2: " << total_2 << endl;
 }
