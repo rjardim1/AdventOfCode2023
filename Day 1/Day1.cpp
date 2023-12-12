@@ -1,35 +1,58 @@
-//
-// Created by Ruben Jardim on 08/12/2023.
-//
+/**
+ * @file Day1.cpp
+ * @brief Implementation of Day1 class for AdventOfCode2023.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <utility>
 #include "Day1.h"
 
+/**
+ * @struct SNumbers
+ * @brief Holds a numeric string and its int conversion.
+ */
 struct SNumbers
 {
-	string NumName;
-	int Number;
+    string NumName; ///< String representing the numeric name ("one", "two"...).
+    int Number; ///< Corresponding integer value.
 
-	SNumbers(string num_name, const int &num)
-		: NumName(std::move(num_name)), Number(num)
-	{
-	}
+    /**
+     * @brief Constructs a new SNumbers structure.
+     * @param num_name The string representing the numeric name.
+     * @param num The corresponding integer value.
+     */
+    SNumbers(string num_name, const int &num)
+        : NumName(std::move(num_name)), Number(num)
+    {
+    }
 };
 
+/**
+ * @var static SNumbers num_strings[9]
+ * @brief A static array of SNumbers structures.
+ *
+ * @details This array contains nine SNumbers structures. Each structure corresponds
+ * to one of the nine single digit positive integers, with a string representation of
+ * the number in English (num_name) and the numeric representation (number).
+ */
 static SNumbers num_strings[9] =
-	{
-		SNumbers("one", 1),
-		SNumbers("two", 2),
-		SNumbers("three", 3),
-		SNumbers("four", 4),
-		SNumbers("five", 5),
-		SNumbers("six", 6),
-		SNumbers("seven", 7),
-		SNumbers("eight", 8),
-		SNumbers("nine", 9)
-	};
+    {
+        SNumbers("one", 1), /* Init structure value */
+        SNumbers("two", 2),
+        SNumbers("three", 3),
+        SNumbers("four", 4),
+        SNumbers("five", 5),
+        SNumbers("six", 6),
+        SNumbers("seven", 7),
+        SNumbers("eight", 8),
+        SNumbers("nine", 9)
+    };
 
+/**
+ * @brief Solves the Day 1 puzzle.
+ * @details Computes and prints the solution of both parts of the day's puzzle.
+ */
 void Day1::SolveDay1()
 {
 	cout << "Day 1" << endl;

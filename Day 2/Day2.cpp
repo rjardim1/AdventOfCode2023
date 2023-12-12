@@ -1,6 +1,7 @@
-//
-// Created by Ruben Jardim on 09/12/2023.
-//
+/**
+ * @file Day2.cpp
+ * @brief Implementation of Day2 class for AdventOfCode2023.
+ */
 
 #include <iostream>
 #include <fstream>
@@ -14,6 +15,10 @@
 
 using namespace std;
 
+/**
+ * @brief Solves the Day 2 puzzle.
+ * @details Computes and displays the solutions to both parts of the Day 2 puzzle.
+ */
 void Day2::SolveDay2()
 {
     cout << "Day 2" << endl;
@@ -107,6 +112,15 @@ void Day2::SolveDay2()
     }
 }
 
+/**
+ * @brief Returns a vector of hands for a given game.
+ * @param hands String representing the collection of hands.
+ * @return Vector of SCubes structures for the given game.
+ * @details This function processes a line of input representing a collection
+ *          of hands, extracts the number of cubes of each color for each hand,
+ *          and stores them in SCubes structures. Each SCubes structure is then
+ *          added to a vector, which is returned.
+ */
 cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)
 {
     cube_sets_in_game_type cube_sets;
@@ -161,4 +175,58 @@ cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)
     }
 
     return cube_sets;
+}
+
+/**
+ * @brief Constructs a new SCubes object.
+ *
+ * @param red The count of red cubes.
+ * @param green The count of green cubes.
+ * @param blue The count of blue cubes.
+ *
+ * @details Constructs a new SCubes object setting the count of red, green
+ * and blue cubes. Checks whether the count of each color of cubes
+ * exceeds the maximum allowable limit according to the game rules. If exceeds,
+ * the Valid member variable is set to false else true.
+ */
+SCubes::SCubes(const int &red, const int &green, const int &blue)
+    : Red(red), Green(green), Blue(blue)
+{
+    int const const_max_red_cubes = 12;
+    int const const_max_green_cubes = 13;
+    int const const_max_blue_cubes = 14;
+
+    bool red_valid = true;
+    bool green_valid = true;
+    bool blue_valid = true;
+
+    if(red > const_max_red_cubes)
+    {
+        red_valid = false;
+    }
+
+    if(green > const_max_green_cubes)
+    {
+        green_valid = false;
+    }
+
+    if(blue > const_max_blue_cubes)
+    {
+        blue_valid = false;
+    }
+
+    Valid = red_valid && green_valid && blue_valid;
+}
+
+/**
+ * @brief Prints the cube configuration to the standard output.
+ *
+ * @details Displays the number of each colored cube and the 'valid'
+ * status of the SCubes object. If 'valid' is true, "True" is printed,
+ * and if 'valid' is false, "False" is printed.
+ */
+void SCubes::Display() const
+{
+    cout << "Red: " << Red << " Green: " << Green << " Blue: " << Blue << " Valid: " <<
+         (Valid ? "True" : "False") << endl;
 }
