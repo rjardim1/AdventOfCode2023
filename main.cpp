@@ -13,7 +13,7 @@ int main()
     Day2::SetInputFileType(Day2::eActualTestData);
     Day2::SolveDay2();
 
-    Day3::SetInputFileType(Day3::eActualTestData);
+    Day3::SetInputFileType(Day3::ePart1TestData);
     Day3::SolveDay3();
 
     return 0;
