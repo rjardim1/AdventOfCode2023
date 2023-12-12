@@ -6,8 +6,6 @@
 #include <utility>
 #include "Day1.h"
 
-using namespace std;
-
 struct SNumbers
 {
 	string NumName;
@@ -35,7 +33,7 @@ static SNumbers num_strings[9] =
 void Day1::SolveDay1()
 {
 	cout << "Day 1" << endl;
-	fstream input_file("/Users/rubenj/AdventOfCode2023/Day 1/input1.txt");
+	fstream input_file("/Users/rubenj/AdventOfCode2023/Day 1/" + GetInputFile());
 	string line;
 	int total_1 = 0;
 	int total_2 = 0;
@@ -94,6 +92,15 @@ void Day1::SolveDay1()
 		total_2 += stoi(to_string(first) + to_string(last));
 	}
 
-	cout << "Part 1: " << total_1 << endl;
-	cout << "Part 2: " << total_2 << endl;
+    if(GetInputType() == ePart1TestData ||
+    GetInputType() == eActualTestData)
+    {
+        cout << "Part 1: " << total_1 << endl;
+    }
+
+    if(GetInputType() == ePart2TestData ||
+       GetInputType() == eActualTestData)
+    {
+        cout << "Part 2: " << total_2 << endl;
+    }
 }

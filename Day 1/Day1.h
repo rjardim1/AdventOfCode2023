@@ -5,12 +5,12 @@
 #ifndef ADVENTOFCODE2023_DAY1_H
 #define ADVENTOFCODE2023_DAY1_H
 
-using namespace std;
+#include "../DayPuzzleFile.h"
 
-class Day1
+class Day1 : public DayPuzzleFile
 {
 public:
-  static void SolveDay1();
+    static void SolveDay1();
 
 private:
   static void ConvertStringToIntString(string &value);

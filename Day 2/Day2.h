@@ -5,8 +5,7 @@
 #ifndef ADVENTOFCODE2023_DAY2_H
 #define ADVENTOFCODE2023_DAY2_H
 
-#include <regex>
-#include <map>
+#include "../DayPuzzleFile.h"
 
 using namespace std;
 
@@ -57,7 +56,7 @@ struct SCubes
 using cube_sets_in_game_type = vector<SCubes>;
 
 
-class Day2
+class Day2 : public DayPuzzleFile
 {
 public:
     static void SolveDay2();

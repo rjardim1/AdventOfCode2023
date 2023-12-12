@@ -7,6 +7,8 @@
 #include <sstream>
 #include <algorithm>
 #include <vector>
+#include <map>
+#include <regex>
 
 #include "Day2.h"
 
@@ -15,7 +17,7 @@ using namespace std;
 void Day2::SolveDay2()
 {
     cout << "Day 2" << endl;
-    fstream input_file("/Users/rubenj/AdventOfCode2023/Day 2/input2.txt");
+    fstream input_file("/Users/rubenj/AdventOfCode2023/Day 2/" + GetInputFile());
     string game_line;
 
     const regex reg("Game.*?(\\d+)");
@@ -92,8 +94,17 @@ void Day2::SolveDay2()
         }
     }
 
-    cout << "Part 1: " << combined_valid_game_id << endl;
-    cout << "Part 2: " << summed_power_cubes << endl;
+    if(GetInputType() == ePart1TestData ||
+       GetInputType() == eActualTestData)
+    {
+        cout << "Part 1: " << combined_valid_game_id << endl;
+    }
+
+    if(GetInputType() == ePart2TestData ||
+       GetInputType() == eActualTestData)
+    {
+        cout << "Part 2: " << summed_power_cubes << endl;
+    }
 }
 
 cube_sets_in_game_type Day2::GetHandsInGame(const string& hands)

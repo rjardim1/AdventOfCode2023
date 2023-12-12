@@ -8,4 +8,8 @@ add_executable(AdventOfCode2023 main.cpp
         "Day 1/Day1.h"
         "Day 2/Day2.cpp"
         "Day 2/Day2.h"
+        "Day 3/Day3.cpp"
+        "Day 3/Day3.h"
+        DayPuzzleFile.cpp
+        DayPuzzleFile.h
 )
